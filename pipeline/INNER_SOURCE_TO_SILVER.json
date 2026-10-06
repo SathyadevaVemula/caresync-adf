@@ -143,12 +143,12 @@
 				"typeProperties": {
 					"notebookPath": "/caresync-repo/caresync-azure-databricks/Landing_to_Bronze",
 					"baseParameters": {
-						"landing Timestamp": {
+						"landing_timestamp": {
 							"value": "@variables('start_time')",
 							"type": "Expression"
 						},
-						"source System": "@activity('Read Table Details').output.firstRow.source_system",
-						"table Name": {
+						"source_system": "@activity('Read Table Details').output.firstRow.source_system",
+						"table_name": {
 							"value": "@activity('Read Table Details').output.firstRow.bronze_table_name",
 							"type": "Expression"
 						}
@@ -181,11 +181,11 @@
 				"typeProperties": {
 					"notebookPath": "/caresync-repo/caresync-azure-databricks/Bronze_to_Silver",
 					"baseParameters": {
-						"landing Timestamp": {
+						"landing_timestamp": {
 							"value": "@variables('start_time')",
 							"type": "Expression"
 						},
-						"table Name": {
+						"table_name": {
 							"value": "@activity('Read Table Details').output.firstRow.silver_table_name",
 							"type": "Expression"
 						}
