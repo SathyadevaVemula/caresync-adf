@@ -197,7 +197,7 @@
 				}
 			},
 			{
-				"name": "update success values to audit table",
+				"name": "update success status to audit table",
 				"type": "Script",
 				"dependsOn": [
 					{
