@@ -49,7 +49,7 @@
 				}
 			},
 			{
-				"name": "Source to landing ingestion",
+				"name": "Source to landing",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -126,7 +126,7 @@
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "Source to landing ingestion",
+						"activity": "Source to landing",
 						"dependencyConditions": [
 							"Succeeded"
 						]
