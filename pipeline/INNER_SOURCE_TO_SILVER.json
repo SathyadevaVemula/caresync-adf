@@ -284,7 +284,14 @@
 						{
 							"name": "Store watermark value",
 							"type": "SetVariable",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "Read Watermark",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
 							"policy": {
 								"secureOutput": false,
 								"secureInput": false
@@ -292,7 +299,10 @@
 							"userProperties": [],
 							"typeProperties": {
 								"variableName": "watermark_value",
-								"value": ""
+								"value": {
+									"value": "@activity('Read Watermark').output.firstRow.watermark_value",
+									"type": "Expression"
+								}
 							}
 						}
 					]
