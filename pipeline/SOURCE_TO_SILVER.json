@@ -48,13 +48,14 @@
 						"value": "@activity('Read Source Tables').output.value",
 						"type": "Expression"
 					},
+					"isSequential": false,
 					"activities": [
 						{
 							"name": "Source to Silver trigger pipeline",
 							"type": "ExecutePipeline",
 							"dependsOn": [
 								{
-									"activity": "Insert values to audit table",
+									"activity": "Insert IN PROGRESS values to audit table",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -83,7 +84,7 @@
 							}
 						},
 						{
-							"name": "Insert values to audit table",
+							"name": "Insert IN PROGRESS values to audit table",
 							"type": "Script",
 							"dependsOn": [],
 							"policy": {
