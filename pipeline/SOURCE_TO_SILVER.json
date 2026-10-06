@@ -99,7 +99,7 @@
 									{
 										"type": "Query",
 										"text": {
-											"value": "insert into ctrl.audit_log(adf_run_id,table_id,stage,status,start_time) VALUES ('a1', @{item().table_id}, 'SOURCE_TO_SILVER','IN_PROGRESS', SYSUTCDATETIME())",
+											"value": "insert into ctrl.audit_log(adf_run_id,table_id,stage,status,start_time) VALUES ('@{pipeline().parameters.adf_run_id}', @{item().table_id}, 'SOURCE_TO_SILVER','IN_PROGRESS', SYSUTCDATETIME())",
 											"type": "Expression"
 										}
 									}
@@ -108,13 +108,13 @@
 							}
 						},
 						{
-							"name": "update values to audit table",
+							"name": "update failed values to audit table",
 							"type": "Script",
 							"dependsOn": [
 								{
 									"activity": "Source to Silver trigger pipeline",
 									"dependencyConditions": [
-										"Succeeded"
+										"Failed"
 									]
 								}
 							],
@@ -135,7 +135,7 @@
 									{
 										"type": "Query",
 										"text": {
-											"value": "insert into ctrl.audit_log(adf_run_id,table_id,stage,status,start_time) VALUES ('a1', @{item().table_id}, 'SOURCE_TO_SILVER','IN_PROGRESS', SYSUTCDATETIME())",
+											"value": "UPDATE ctrl.audit_log\nSET status = 'FAILED', end_time = SYSUTCDATETIME()\nwhere adf_run_id = '@{pipeline().parameters.adf_run_id}' and table_id = @{item().table_id}",
 											"type": "Expression"
 										}
 									}
@@ -151,6 +151,10 @@
 			"source_system": {
 				"type": "string",
 				"defaultValue": "neon_postgres"
+			},
+			"adf_run_id": {
+				"type": "string",
+				"defaultValue": "a2"
 			}
 		},
 		"variables": {
