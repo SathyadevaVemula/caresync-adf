@@ -197,9 +197,16 @@
 				}
 			},
 			{
-				"name": "update values to audit table",
+				"name": "update success values to audit table",
 				"type": "Script",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Bronze to Silver",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 2,
@@ -217,7 +224,7 @@
 						{
 							"type": "Query",
 							"text": {
-								"value": "UPDATE ctrl.audit_log\nSET status = 'FAILED', end_time = SYSUTCDATETIME()\nwhere adf_run_id = '@{pipeline().parameters.adf_run_id}' and table_id = @{item().table_id}",
+								"value": "UPDATE ctrl.audit_log\nSET status = 'SUCCESS', records_written = @{activity('Bronze to Silver').output.runOutput}, end_time = SYSUTCDATETIME()\nwhere adf_run_id = '@{pipeline().parameters.adf_run_id}' and table_id = @{pipeline().parameters.table_id}",
 								"type": "Expression"
 							}
 						}
@@ -230,6 +237,10 @@
 			"table_id": {
 				"type": "string",
 				"defaultValue": "1"
+			},
+			"adf_run_id": {
+				"type": "string",
+				"defaultValue": "a1"
 			}
 		},
 		"variables": {
